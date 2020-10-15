@@ -1,4 +1,4 @@
-#Random Quote Generator
+# Random Quote Generator
 
 This program utilizes the free quotes API (https://programming-quotes-api.herokuapp.com/quotes)
 to fetch quotes. The program also has a Rating element to rate a specific quote. Based on the rating
@@ -7,7 +7,7 @@ fetches random quote. It uses Vue-Material for design.
 
 ---
 
-###Implementation
+### Implementation
 
 1. Fetches a random quote on page load
 2. Displays the fetched quote with author and the source of the quote
@@ -20,7 +20,7 @@ fetches random quote. It uses Vue-Material for design.
 
 ---
 
-###Similarity approach
+### Similarity approach
 
 1. Used FuseJS.io to find similar quotes.
 2. Fuse.js is a powerful, lightweight fuzzy-search library, with zero dependencies.
@@ -34,7 +34,7 @@ fetches random quote. It uses Vue-Material for design.
 
 ---
 
-###Additional implementation
+### Additional implementation
 
 - Show Liked Quotes ( rating 4 or 5)
 - Displaying source and author of the code
@@ -42,7 +42,7 @@ fetches random quote. It uses Vue-Material for design.
 
 ---
 
-###Future Scope
+### Future Scope
 
 - Improve similarity algorithm, to use most relevant words to find similar quotes.
 - Increased Data Set, to build a system of smart suggestions.
@@ -52,12 +52,13 @@ fetches random quote. It uses Vue-Material for design.
 
 ---
 
-###Access
+### Access
+
 You can access the deployed project at: https://briq-assignment-sidharth.herokuapp.com/
 
 ---
 
-###How to run locally
+### How to run locally
 
 1. Clone repo to your system or use git clone https://github.com/sidharthssingh/randomquotegenerator.git
 2. Traverse to the directory path
