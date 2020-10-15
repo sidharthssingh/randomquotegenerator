@@ -120,8 +120,8 @@ const quoteGenerator = new Vue({
             return Promise.reject(error);
           }
           this.dialogShown = true;
+          if (this.rating > 3) this.ratedQuotes.push(this.quote);
           this.getSimilarQuotes(this.quote);
-          if (this.previousRating > 3) this.ratedQuotes.push(this.quote);
         })
         .catch(error => {
           this.errorMessage = error;
