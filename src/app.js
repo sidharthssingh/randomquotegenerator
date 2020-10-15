@@ -70,7 +70,7 @@ const quoteGenerator = new Vue({
         // Getting similar quotes
         let words = quote.split(" ");
         const fuse = new Fuse(this.responseData, options);
-        let searchString = words[0] + " " + words[1];
+        let searchString = words[0] + words[1];
         const result = fuse.search(searchString);
         this.filterSearchResults(result);
         console.log("Words " + JSON.stringify(result));
