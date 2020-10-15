@@ -27,7 +27,7 @@ const quoteGenerator = new Vue({
     getQuote() {
       this.show = false;
       const fetchUrl = "https://programming-quotes-api.herokuapp.com/quotes";
-      if (this.responseData) {
+      if (this.responseData && this.responseData.length > 5) {
         this.generateQuote(this.responseData);
       } else {
         fetch(fetchUrl)
