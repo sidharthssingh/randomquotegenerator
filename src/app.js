@@ -16,21 +16,37 @@ const quoteGenerator = new Vue({
     rating: 0,
     responseData: null,
     previousRating: null,
-    dialogShown: false
+    dialogShown: false,
+    ratedQuotes: [],
+    position: "center",
+    duration: 2000,
+    showRatedQuotes: false,
+    ratedQuotesBtnTxt: "Show Liked Quotes"
   },
   methods: {
     getQuote() {
       this.show = false;
+      const fetchUrl = "https://programming-quotes-api.herokuapp.com/quotes";
       if (this.responseData) {
         this.generateQuote(this.responseData);
       } else {
-        fetch("https://programming-quotes-api.herokuapp.com/quotes")
+        fetch(fetchUrl)
           .then(res => res.json())
           .then(data => {
             this.responseData = data;
             this.generateQuote(this.responseData);
           });
       }
+    },
+    showQuotes() {
+      this.showRatedQuotes = !this.showRatedQuotes;
+      this.changeRatedQuotesBtnTxt();
+    },
+
+    changeRatedQuotesBtnTxt() {
+      this.showRatedQuotes
+        ? (this.ratedQuotesBtnTxt = "Hide Liked Quotes")
+        : (this.ratedQuotesBtnTxt = "Show Liked Quotes");
     },
 
     generateQuote(data) {
@@ -60,8 +76,8 @@ const quoteGenerator = new Vue({
         console.log("Words " + JSON.stringify(result));
       } else {
         this.responseData = null;
-        this.getQuote();
       }
+      this.getQuote();
     },
 
     filterSearchResults(result) {
@@ -74,7 +90,7 @@ const quoteGenerator = new Vue({
     },
 
     isSimiliar(value) {
-      return value.score >= 0.4; // Similarity parameter, if value match is greater than 40%
+      return value.score >= 0.35; // Similarity parameter, if value match is greater than 35%
     },
 
     calculateIndex(data) {
@@ -89,15 +105,14 @@ const quoteGenerator = new Vue({
     },
 
     postRating() {
+      const postUrl =
+        "https://programming-quotes-api.herokuapp.com/quotes/vote";
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ quoteId: this.id, newVote: this.rating })
       };
-      fetch(
-        "https://programming-quotes-api.herokuapp.com/quotes/vote",
-        requestOptions
-      )
+      fetch(postUrl, requestOptions)
         .then(async response => {
           const data = await response.json();
           if (!response.ok) {
@@ -105,7 +120,8 @@ const quoteGenerator = new Vue({
             return Promise.reject(error);
           }
           this.dialogShown = true;
-          this.getSimilarQuotes(this.responseData[this.index].en);
+          this.getSimilarQuotes(this.quote);
+          if (this.previousRating > 3) this.ratedQuotes.push(this.quote);
         })
         .catch(error => {
           this.errorMessage = error;

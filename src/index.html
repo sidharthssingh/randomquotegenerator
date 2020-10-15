@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="md-theme-default">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/styles/styles.css" type="text/css" />
   <link rel="stylesheet" href="/styles/vue-material.css">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
-  <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default-dark.css">
+  <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
   <title>Briq coding assignment</title>
 </head>
 
@@ -35,12 +35,22 @@
     </md-content>
     <div class="btn-wrapper">
       <md-button class="md-accent md-raised" @click="getQuote" id="new-quote">Get New Quote</md-button>
+      <md-button class="md-primary md-raised" @click="showQuotes" id="show-quote">{{ratedQuotesBtnTxt}}</md-button>
       <p class="md-body-2 padding10">Rate this quote
       </p>
       <star-rating v-model="rating" @rating-selected="setRating" :star-size=20 />
     </div>
-    <md-dialog-alert :md-active.sync="dialogShown" md-title="Rating submitted"
-      md-content="Your Rating has been submitted" />
+
+    <md-list v-if="showRatedQuotes">
+      <md-list-item v-for="item in ratedQuotes" :key="item+index">
+        <span class="md-list-item-text">{{item}}</span>
+        <md-divider ></md-divider>
+      </md-list-item>
+
+    </md-list>
+    <md-snackbar :md-position="position" :md-duration="duration" :md-active.sync="dialogShown" md-persistent>Rating
+      submitted successfully</md-snackbar>
+
   </main>
   <script src="/src/app.js"></script>
 </body>
